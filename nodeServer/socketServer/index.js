@@ -5,7 +5,16 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server,
+    {
+        cors: {
+          origin: "*",  // Allow requests from the Angular frontend
+          methods: ["GET", "POST"],  // Allow these methods
+          allowedHeaders: ["my-custom-header"],  // Optionally allow custom headers
+          credentials: true  // Allow cookies to be sent with requests
+        }
+    }
+);
 
 // Serve the static files (HTML, CSS, JS) from the "public" folder
 app.use(express.static('public'));
